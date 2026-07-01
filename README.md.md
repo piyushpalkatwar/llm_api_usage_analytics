@@ -1,4 +1,4 @@
-# Project 3: LLM API Usage Analytics & Cost Optimization
+# LLM API Usage Analytics & Cost Optimization
 
 ## Overview
 This project analyzes enterprise usage of LLM APIs (GPT-4 Turbo, GPT-3.5 Turbo, Claude 3 Opus, Claude 3 Sonnet) across 10 organizations. It tracks cost, latency, token consumption, error rates, and RAG (Retrieval-Augmented Generation) adoption to identify where spend can be optimized without sacrificing reliability — a direct, current-day reflection of how companies actually manage their AI infrastructure costs in 2025–26.

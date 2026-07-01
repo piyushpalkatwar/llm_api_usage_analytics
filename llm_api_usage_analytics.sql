@@ -1,15 +1,13 @@
--- ============================================================
--- PROJECT 3: LLM API Usage Analytics & Cost Optimization
+
+---LLM API Usage Analytics & Cost Optimization
 -- Domain: Generative AI / API Products
 -- Tools: SQL (PostgreSQL / SQLite compatible)
 -- Analyst: Piyush Palkatwar | Date: 2026-06-30
 -- Trend: Analyzing enterprise LLM API consumption, costs,
---        latency, error rates, and ROI by use case/model
--- ============================================================
+--latency, error rates, and ROI by use case/model
 
--- ─────────────────────────────────────────────
+
 -- STEP 1: CREATE TABLE & LOAD DATA
--- ─────────────────────────────────────────────
 
 CREATE TABLE IF NOT EXISTS llm_api_requests (
     request_id          VARCHAR(10) PRIMARY KEY,
@@ -34,9 +32,8 @@ CREATE TABLE IF NOT EXISTS llm_api_requests (
 -- Load CSV: COPY llm_api_requests FROM 'llm_api_requests.csv' CSV HEADER;
 
 
--- ─────────────────────────────────────────────
 -- STEP 2: PLATFORM OVERVIEW — USAGE SUMMARY
--- ─────────────────────────────────────────────
+
 
 -- Business Question: What's the overall health of the LLM platform?
 -- Baseline dashboard metrics for API product teams.
@@ -53,9 +50,8 @@ SELECT
 FROM llm_api_requests;
 
 
--- ─────────────────────────────────────────────
+
 -- STEP 3: MODEL COMPARISON — PERFORMANCE & COST
--- ─────────────────────────────────────────────
 
 -- Business Question: Which model gives the best performance/cost ratio?
 -- Helps orgs optimize model selection for different use cases.
@@ -85,9 +81,9 @@ Expected Insight:
 */
 
 
--- ─────────────────────────────────────────────
+
 -- STEP 4: USE CASE ANALYSIS — COST + LATENCY
--- ─────────────────────────────────────────────
+
 
 -- Business Question: Which use cases are most expensive / slow?
 -- Helps product teams identify optimization candidates.
@@ -108,9 +104,8 @@ GROUP BY use_case
 ORDER BY total_cost_usd DESC;
 
 
--- ─────────────────────────────────────────────
 -- STEP 5: ERROR ANALYSIS
--- ─────────────────────────────────────────────
+
 
 -- Business Question: What's causing API failures and which orgs are affected?
 -- SRE / platform reliability teams monitor this.
@@ -144,9 +139,7 @@ GROUP BY model_name
 ORDER BY error_rate_pct DESC;
 
 
--- ─────────────────────────────────────────────
 -- STEP 6: ORG-LEVEL SPEND ANALYSIS (TOP CONSUMERS)
--- ─────────────────────────────────────────────
 
 -- Business Question: Who are our highest-spend API customers?
 -- Revenue intelligence for enterprise sales and CSM teams.
@@ -171,9 +164,8 @@ GROUP BY org_id, org_name, plan_tier
 ORDER BY total_cost_usd DESC;
 
 
--- ─────────────────────────────────────────────
+
 -- STEP 7: RAG vs NON-RAG PERFORMANCE
--- ─────────────────────────────────────────────
 
 -- Business Question: Does enabling RAG improve quality proxies?
 -- RAG = Retrieval Augmented Generation (biggest 2024-25 AI trend).
@@ -200,9 +192,8 @@ Expected Insight:
 */
 
 
--- ─────────────────────────────────────────────
 -- STEP 8: LATENCY DISTRIBUTION (PERCENTILES)
--- ─────────────────────────────────────────────
+
 
 -- Business Question: What's the P50/P75/P95 latency per model?
 -- SLA monitoring: enterprise contracts often require <3000ms P95.
@@ -242,9 +233,8 @@ FROM llm_api_requests GROUP BY model_name;
 */
 
 
--- ─────────────────────────────────────────────
 -- STEP 9: TEMPERATURE vs OUTPUT LENGTH ANALYSIS
--- ─────────────────────────────────────────────
+
 
 -- Business Question: Do higher temperature settings produce longer outputs?
 -- Informs default parameter recommendations to new API users.
@@ -266,9 +256,8 @@ GROUP BY temperature_range
 ORDER BY avg_completion_tokens DESC;
 
 
--- ─────────────────────────────────────────────
+
 -- STEP 10: MONTHLY COST PROJECTION + OPTIMIZATION VIEW
--- ─────────────────────────────────────────────
 
 -- Business Question: At this rate, what's the monthly API spend?
 -- And what's the potential saving from model optimization?
@@ -304,9 +293,8 @@ SELECT
     ROUND(projected_monthly_cost_usd * 0.18, 2)    AS est_savings_with_model_routing_usd
 FROM projections;
 
--- ─────────────────────────────────────────────
+
 -- STEP 11: EXECUTIVE SUMMARY VIEW
--- ─────────────────────────────────────────────
 
 CREATE VIEW IF NOT EXISTS llm_exec_summary AS
 SELECT
@@ -324,7 +312,6 @@ ORDER BY total_cost_usd DESC;
 
 SELECT * FROM llm_exec_summary;
 
--- ============================================================
 -- END OF PROJECT 3
 -- Key Takeaways:
 -- 1. gpt-3.5-turbo has best tokens/$ ratio for simple tasks
@@ -332,4 +319,4 @@ SELECT * FROM llm_exec_summary;
 -- 3. RAG calls cost ~2x but produce richer completions
 -- 4. Timeout errors = biggest reliability issue to solve
 -- 5. Model routing by use case could cut spend 15-20%
--- ============================================================
+
